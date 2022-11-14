@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
+
+    <!--<context:component-scan base-package="net.ict.springex.sample"/>--><!-- 해당 패키지에 있는 것들을 빈객체로 만들어준다. -->
+
+    <context:component-scan base-package="net.ict.springex.config"></context:component-scan> <!--해딩패키지에 있는 클래스들을 빈객체로 만들어 준다-->
+    <context:component-scan base-package="net.ict.springex.service"></context:component-scan>
+
+    <!-- 각각의 bean들은 bean으로 감싼 하나의 클래스이다. 웹문서형태로 생각하면된다.
+    <constructor-arg>는 생성자 태그이다.
+    -->
+    <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+        <property name="driverClassName" value="org.mariadb.jdbc.Driver"></property>
+        <property name="jdbcUrl" value="jdbc:mariadb://localhost:3305/webdb"></property>
+        <property name="username" value="webuser"></property>
+        <property name="password" value="webuser"></property>
+        <property name="dataSourceProperties">
+            <props>
+                <prop key="cachePrepStmts">true</prop>
+                <prop key="prepStmtCacheSize">250</prop>
+                <prop key="prepStmtCacheSqlLimit">2048</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource"
+          destroy-method="close">
+        <constructor-arg ref="hikariConfig" /><!--생성자에 연결클래스를 주입시켜주었다.-->
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--클래스가 실체이고 마리아DB랑 Mybatis를 연동시킨것이다.-->
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath:/mappers/**/*.xml"></property><!--mappers 하위에 있는모든 xml파일을 인식해서
+         등록하라는 뜻이다-->
+    </bean>
+
+    <mybatis:scan base-package="net.ict.springex.mapper"></mybatis:scan> <!-- mapper에 있는 클래스의 메소드를 스캔한다.-->
+</beans>
