@@ -28,7 +28,7 @@ public class TodoController {
     public String registerPost(TodoDTO todoDTO, RedirectAttributes redirectAttributes){
         log.info("POST todo register.........");
         log.info(todoDTO);
-        return "redirect:/todo/list"; //todo/list로 보내준다........
+        return "redirect:/todo/list"; //todo/list로 보내준다................!
     }
 
 
