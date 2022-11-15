@@ -38,7 +38,7 @@
             </div>
         </div>
         <!-- header end -->
-        <!-- 기존의 <h1>Header</h1>끝 -->
+        <!-- 기존의 <h1>Header</h1> 끝 -->
 
         <div class="row content">
             <div class="col">
