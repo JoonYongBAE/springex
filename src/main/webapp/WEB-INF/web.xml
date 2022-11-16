@@ -13,7 +13,7 @@
     </listener>
     <!-- 톰캣을 실행하면 스프링과 관련된 로그가 기록되면서 실행됨을 확인할 수 있다.-->
 
-    <!--DispatcherServlet = FrontController 지정-->
+    <!--DispatcherServlet = FrontController지정 // 프론트 커트롤러를 역할한다.-->
     <servlet>
         <servlet-name>appServlet</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

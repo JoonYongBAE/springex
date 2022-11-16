@@ -6,7 +6,7 @@
 
 
     <!--  getTime의 이름을 가진 메소드에 String의 타입으로 지금 시간을 리턴하도록 매핑을 한 것이다.
-        Mybatis 를 사용한 것이다.-->
+        Mybatis 를 사용한 것이다. DAO의 역할을 한다.-->
     <select id="getTime" resultType="string">
         select now()
     </select>
@@ -18,4 +18,25 @@
     <select id="selectAll" resultType="net.ict.springex.domain.TodoVO"><!-- ? -->
         select * from tbl_todo order by tno desc
     </select> <!--selectAll을 작성 후에 작동하는지 테스트랠 해봐야한다. TTD-->
+
+    <delete id="delete">
+        delete from tbl_todo where tno = #{tno}
+    </delete>
+
+    <update id="update">
+        update tbl_todo set title = #{title}, dueDate = #{dueDate}, finished = #{finished} where tno= #{tno}
+    </update>
+    
+    <select id="selectOne" resultType="net.ict.springex.domain.TodoVO">
+        select * from tbl_todo where tno = #{tno}
+    </select>
+
+    <select id="selectList" resultType="net.ict.springex.domain.TodoVO">
+        select * from tbl_todo order by tno desc limit #{skip}, #{size}
+    </select>
+
+    <select id="getCount"   resultType="int">
+        select count(tno) from tbl_todo
+    </select>
+
 </mapper>
